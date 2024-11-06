@@ -10,16 +10,24 @@ Created on Tue Nov  5 12:19:27 2024
 import streamlit as st
 from PyPDF2 import PdfReader
 import pandas as pd
-import spacy
 import random
 
+import spacy
 
+# Descargar el modelo en_core_web_sm
+try:
+    spacy.cli.download("en_core_web_sm")
+except:
+    print("El modelo 'en_core_web_sm' ya está instalado.")
+    
+# Cargar el modelo
+nlp = spacy.load("en_core_web_sm")
 
 
 
 
 # Cargar el modelo de spaCy
-nlp = spacy.load("en_core_web_sm")
+#nlp = spacy.load("en_core_web_sm")
 
 
 # Cargar el modelo usando la ruta que obtuviste
