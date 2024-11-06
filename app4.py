@@ -12,12 +12,19 @@ import spacy
 import numpy as np
 import spacy.cli
 
-# Descargar el modelo en caso de que no esté disponible
+
+import os
+
+# Intentar cargar el modelo
 try:
     nlp = spacy.load("en_core_web_sm")
 except OSError:
+    # Si no se encuentra el modelo, descargarlo
     spacy.cli.download("en_core_web_sm")
     nlp = spacy.load("en_core_web_sm")
+
+
+
 
 # Función para extraer texto de archivos PDF
 def extract_text_from_pdf(pdf_file):
