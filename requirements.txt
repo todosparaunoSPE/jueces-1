@@ -3,6 +3,7 @@ PyPDF2
 spacy
 pandas
 numpy
+en-core-web-sm
 
 
 
