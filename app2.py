@@ -10,28 +10,11 @@ Created on Tue Nov  5 12:19:27 2024
 import streamlit as st
 from PyPDF2 import PdfReader
 import pandas as pd
+import spacy
 import random
 
-import spacy
-
-# Descargar el modelo en_core_web_sm
-try:
-    spacy.cli.download("en_core_web_sm")
-except:
-    print("El modelo 'en_core_web_sm' ya está instalado.")
-    
-# Cargar el modelo
-nlp = spacy.load("en_core_web_sm")
-
-
-
-
 # Cargar el modelo de spaCy
-#nlp = spacy.load("en_core_web_sm")
-
-
-# Cargar el modelo usando la ruta que obtuviste
-#nlp = spacy.load("C:/Users/jperezr/.conda/envs/felix/Lib/site-packages/en_core_web_sm")
+nlp = spacy.load("en_core_web_sm")
 
 def evaluar_contenido(texto):
     # Lógica para evaluar el contenido
@@ -41,14 +24,15 @@ def evaluar_contenido(texto):
 
 def evaluar_estructura(texto):
     # Lógica para evaluar la estructura
-    doc = nlp(texto)
+    doc = nlp(texto)  # Usamos spaCy para procesar el texto
     num_parrafos = texto.count('\n\n') + 1
-    return random.randint(3, 5) + (num_parrafos // 2)  # Calificación base más estructura
+    num_oraciones = len([sent for sent in doc.sents if sent.text.strip() != ''])  # Número de oraciones en el texto
+    return random.randint(3, 5) + (num_oraciones // 2)  # Calificación base más número de oraciones
 
 def evaluar_estilo(texto):
     # Lógica para evaluar el estilo
-    doc = nlp(texto)
-    oraciones = list(doc.sents)  # Convertir el generador en una lista
+    doc = nlp(texto)  # Usamos spaCy para procesar el texto
+    oraciones = list(doc.sents)  # Convertir el generador de oraciones en una lista
     long_media = sum(len(sent) for sent in oraciones) / len(oraciones) if len(oraciones) > 0 else 0
     
     if long_media < 15:
