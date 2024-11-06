@@ -8,38 +8,10 @@ import streamlit as st
 import PyPDF2
 import pandas as pd
 import spacy
-
 import numpy as np
-from nlp_model import load_spacy_model  # Importa la función desde nlp_model.py
 
-import os
-import subprocess
-
-# Verifica si el modelo ya está descargado, si no lo descarga
-def download_spacy_model():
-    try:
-        # Intentar cargar el modelo
-        spacy.load("en_core_web_sm")
-    except OSError:
-        # Si ocurre un error, significa que el modelo no está descargado
-        st.write("El modelo 'en_core_web_sm' no está descargado. Procediendo a la instalación...")
-        
-        # Ejecutar el comando para descargar el modelo
-        subprocess.run(["python", "-m", "spacy", "download", "en_core_web_sm"], check=True)
-        st.write("Modelo descargado con éxito.")
-        
-        # Intentar cargar el modelo nuevamente
-        spacy.load("en_core_web_sm")
-        st.write("Modelo cargado correctamente.")
-
-# Llamar a la función para asegurarse de que el modelo esté disponible
-download_spacy_model()
-
-# Cargar el modelo
+# Cargar modelo de spaCy para análisis de texto
 nlp = spacy.load("en_core_web_sm")
-
-
-
 
 # Función para extraer texto de archivos PDF
 def extract_text_from_pdf(pdf_file):
@@ -73,31 +45,6 @@ def evaluate_essay(text):
 
 # Interfaz de Streamlit
 st.title("Evaluación Automática de Ensayos: Selección de Candidatos para Ocupación de Vacantes Según la Nueva Reforma del Poder Judicial")
-
-# Sidebar con sección de ayuda
-st.sidebar.title("Ayuda")
-st.sidebar.markdown("""
-Bienvenido a la **Evaluación Automática de Ensayos**. Esta herramienta permite evaluar los ensayos subidos por los usuarios según los siguientes criterios:
-
-1. **Contenido**: Evalúa la cantidad de palabras en el ensayo.
-2. **Estructura**: Mide el número de oraciones presentes en el ensayo.
-3. **Estilo**: Calcula la diversidad léxica del ensayo, es decir, cuántas palabras únicas se utilizan.
-4. **Originalidad**: Mide la diversidad de frases en el texto, reflejando la creatividad y complejidad.
-5. **Impacto**: Evalúa la intensidad del sentimiento en el ensayo, lo que ayuda a determinar el grado de influencia emocional.
-
-Además, la calificación final se calcula como el promedio de estos puntajes.
-
-### Instrucciones:
-1. **Sube los ensayos**: Puedes subir múltiples archivos en formato PDF para que sean evaluados.
-2. **Revisa los resultados**: Verás una tabla con la evaluación de cada ensayo, incluyendo una calificación final.
-3. **Top 5 Mejores Ensayos**: Después de la evaluación, te mostraremos los 5 mejores ensayos basados en la calificación final.
-
-Si tienes dudas o preguntas adicionales, puedes contactarme directamente:
-
-**Javier Horacio Pérez Ricárdez**  
-Correo: [jahoperi@gmail.com](mailto:jahoperi@gmail.com)  
-Móvil: 993 291 3812
-""")
 
 # Cargar archivos PDF
 uploaded_files = st.file_uploader("Sube tus archivos PDF", type="pdf", accept_multiple_files=True)
