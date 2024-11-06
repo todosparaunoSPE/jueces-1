@@ -8,11 +8,11 @@ Created on Wed Nov  6 11:10:30 2024
 import streamlit as st
 from PyPDF2 import PdfReader
 import pandas as pd
-import spacy
 import random
+from nlp_model import load_spacy_model  # Importamos la función para cargar el modelo de spaCy
 
-# Cargar el modelo de spaCy
-nlp = spacy.load("en_core_web_sm")
+# Cargar el modelo de spaCy usando la función importada
+nlp = load_spacy_model()
 
 def evaluar_contenido(texto):
     # Lógica para evaluar el contenido
@@ -67,7 +67,7 @@ def main():
 
     # Sidebar con sección de ayuda
     st.sidebar.markdown("## Ayuda")
-    st.sidebar.markdown("""
+    st.sidebar.markdown(""" 
     ### Evaluación de Ensayos Judiciales
     Esta aplicación permite evaluar ensayos judiciales en formato PDF mediante un sistema de calificación basado en cinco criterios: Contenido, Estructura, Estilo, Originalidad e Impacto. Los ensayos son analizados utilizando técnicas de procesamiento de lenguaje natural (NLP) para generar calificaciones y seleccionar los mejores candidatos.
 
@@ -89,7 +89,7 @@ def main():
     - Bibliotecas: `streamlit`, `PyPDF2`, `pandas`, `spacy`
     - Asegúrate de tener el modelo de spaCy (`en_core_web_sm`) instalado.
     """)
-
+    
     # Resto de tu código para carga y evaluación de ensayos
     uploaded_files = st.file_uploader("Cargar archivos PDF", accept_multiple_files=True)
     
