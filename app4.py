@@ -11,8 +11,13 @@ import pandas as pd
 import spacy
 import numpy as np
 
+
+from nlp_model import load_spacy_model  # Importa la función desde nlp_model.py
+
 # Cargar modelo de spaCy para análisis de texto
-nlp = spacy.load("en_core_web_sm")
+=nlp = spacy.load("en_core_web_sm")
+
+nlp = load_spacy_model()
 
 # Función para extraer texto de archivos PDF
 def extract_text_from_pdf(pdf_file):
