@@ -9,6 +9,7 @@ import streamlit as st
 from PyPDF2 import PdfReader
 import pandas as pd
 import random
+import spacy
 from nlp_model import load_spacy_model  # Importamos la función para cargar el modelo de spaCy
 
 # Cargar el modelo de spaCy usando la función importada
