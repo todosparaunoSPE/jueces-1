@@ -2,4 +2,4 @@ streamlit
 PyPDF2
 pandas
 spacy
-en_core_web_sm
+
