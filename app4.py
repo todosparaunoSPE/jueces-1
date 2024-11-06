@@ -8,11 +8,16 @@ import streamlit as st
 import PyPDF2
 import pandas as pd
 import spacy
+import os
 import numpy as np
 from nlp_model import load_spacy_model  # Importa la función desde nlp_model.py
 
-# Cargar modelo de spaCy para análisis de texto usando la función
-nlp = load_spacy_model()
+# Verifica si el modelo ya está descargado, si no, lo descarga
+if not os.path.exists(spacy.util.get_package_path("en_core_web_sm")):
+    os.system("python -m spacy download en_core_web_sm")
+
+# Cargar el modelo
+nlp = spacy.load("en_core_web_sm")
 
 # Función para extraer texto de archivos PDF
 def extract_text_from_pdf(pdf_file):
