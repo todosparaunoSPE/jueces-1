@@ -4,20 +4,15 @@ Created on Wed Nov  6 14:03:16 2024
 
 @author: jperezr
 """
-
 import streamlit as st
 import PyPDF2
 import pandas as pd
 import spacy
 import numpy as np
-
-
 from nlp_model import load_spacy_model  # Importa la función desde nlp_model.py
 
-# Cargar modelo de spaCy para análisis de texto
-nlp = spacy.load("en_core_web_sm")
-
-#nlp = load_spacy_model()
+# Cargar modelo de spaCy para análisis de texto usando la función
+nlp = load_spacy_model()
 
 # Función para extraer texto de archivos PDF
 def extract_text_from_pdf(pdf_file):
@@ -76,7 +71,6 @@ Si tienes dudas o preguntas adicionales, puedes contactarme directamente:
 Correo: [jahoperi@gmail.com](mailto:jahoperi@gmail.com)  
 Móvil: 993 291 3812
 """)
-
 
 # Cargar archivos PDF
 uploaded_files = st.file_uploader("Sube tus archivos PDF", type="pdf", accept_multiple_files=True)
