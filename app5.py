@@ -118,3 +118,9 @@ if uploaded_files:
     
     st.subheader("Top 5 mejores ensayos:")
     st.write(top_5)
+
+
+# En el sidebar de Streamlit
+with st.sidebar:
+    st.header("Copyrith")
+    st.write("Desarrollado por Javier Horacio Pérez Ricárdez")
