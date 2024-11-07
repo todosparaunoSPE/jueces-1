@@ -2,7 +2,7 @@ streamlit==1.21.0
 PyPDF2==2.11.2
 pandas==1.5.3
 spacy==3.7.5
-en-core-web-sm==3.7.1
+en-core-web-sm==3.0.0
 numpy==1.24.2
 
 
