@@ -4,24 +4,19 @@ Created on Wed Nov  6 14:03:16 2024
 
 @author: jperezr
 """
-
 import streamlit as st
 import PyPDF2
 import pandas as pd
 import spacy
 import numpy as np
-import spacy.cli import download
+import spacy.cli
 
-# Verifica si el modelo está instalado, si no lo está, lo instala
+# Descargar el modelo en caso de que no esté disponible
 try:
     nlp = spacy.load("en_core_web_sm")
 except OSError:
-    download("en_core_web_sm")
+    spacy.cli.download("en_core_web_sm")
     nlp = spacy.load("en_core_web_sm")
-
-
-
-
 
 # Función para extraer texto de archivos PDF
 def extract_text_from_pdf(pdf_file):
