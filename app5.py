@@ -120,7 +120,7 @@ if uploaded_files:
     st.write(top_5)
 
 
-# En el sidebar de Streamlit
+# En el sidebar de Streamlit con el símbolo de derechos de autor
 with st.sidebar:
-    st.header("Copyrith. Todos los derechos reservados")
-    st.write("Desarrollado por Javier Horacio Pérez Ricárdez")
+    st.markdown("## © Copyrith")
+    st.markdown("Desarrollado por **Javier Horacio Pérez Ricárdez**")
