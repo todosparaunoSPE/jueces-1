@@ -58,8 +58,17 @@ def evaluate_essay(text):
 # Interfaz de Streamlit
 st.title("Evaluación Automática de Ensayos: Selección de Candidatos para Ocupación de Vacantes Según la Nueva Reforma del Poder Judicial")
 
-# Sección de Ayuda en el sidebar
+# Sidebar con botón de descarga del PDF
 with st.sidebar:
+    # Botón para descargar el archivo PDF
+    st.download_button(
+        label="Descargar el PDF de lo que hace el código",
+        data=open("ensayos.pdf", "rb").read(),  # Abrir el archivo PDF
+        file_name="ensayos.pdf",  # Nombre del archivo de salida
+        mime="application/pdf"  # Tipo MIME
+    )
+
+    # Sección de Ayuda en el sidebar
     st.header("Ayuda")
     st.write("""
     ### ¿Cómo funciona esta aplicación?
@@ -118,7 +127,6 @@ if uploaded_files:
     
     st.subheader("Top 5 mejores ensayos:")
     st.write(top_5)
-
 
 # En el sidebar de Streamlit con el símbolo de derechos de autor
 with st.sidebar:
