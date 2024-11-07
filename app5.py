@@ -122,5 +122,5 @@ if uploaded_files:
 
 # En el sidebar de Streamlit
 with st.sidebar:
-    st.header("Copyrith")
+    st.header("Copyrith. Todos los derechos reservados")
     st.write("Desarrollado por Javier Horacio Pérez Ricárdez")
