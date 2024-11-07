@@ -4,29 +4,12 @@ Created on Thu Nov  7 09:34:12 2024
 
 @author: jperezr
 """
+
 import streamlit as st
 import PyPDF2
 import pandas as pd
 import numpy as np
 import re
-
-
-# Estilo de fondo
-page_bg_img = """
-<style>
-[data-testid="stAppViewContainer"]{
-background:
-radial-gradient(black 15%, transparent 16%) 0 0,
-radial-gradient(black 15%, transparent 16%) 8px 8px,
-radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
-radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
-background-color:#282828;
-background-size:16px 16px;
-</style>
-"""
-
-st.markdown(page_bg_img, unsafe_allow_html=True)
-
 
 # Función para extraer texto de archivos PDF
 def extract_text_from_pdf(pdf_file):
@@ -36,33 +19,46 @@ def extract_text_from_pdf(pdf_file):
         text += pdf_reader.pages[page_num].extract_text()
     return text
 
-# Función para evaluar el contenido de acuerdo con los criterios usando 're'
+# Función para evaluar el contenido de acuerdo con los criterios
 def evaluate_essay(text):
-    # Evaluación de Contenido usando la longitud del texto (número de palabras)
-    words = re.findall(r'\b\w+\b', text)  # Encuentra todas las palabras (sin puntuación)
-    content_score = len(words)
+    # Evaluación de Contenido usando la longitud del texto
+    content_score = len(text.split())  # Número de palabras
     
-    # Evaluación de Estructura (número de oraciones)
-    sentences = re.split(r'[.!?]', text)  # Divide el texto en oraciones basadas en puntuación
-    structure_score = len([sent for sent in sentences if sent.strip()])  # Oraciones no vacías
+    # Evaluación de Estructura (Número de oraciones y uso adecuado de puntuación)
+    structure_score = len(re.findall(r'\.', text))  # Número de oraciones
     
-    # Evaluación de Estilo (diversidad de palabras)
-    unique_words = len(set(words))  # Palabras únicas
-    style_score = unique_words / len(words)  # Diversidad léxica
+    # Evaluación de Estilo (usando la diversidad de palabras)
+    unique_words = len(set(text.split()))  # Número de palabras únicas
+    style_score = unique_words / len(text.split())  # Diversidad léxica
     
-    # Evaluación de Originalidad (diversidad de frases)
-    unique_sentences = len(set([sent.strip() for sent in sentences if sent.strip()]))  # Frases únicas
-    original_score = unique_sentences / structure_score if structure_score > 0 else 0
+    # Evaluación de Originalidad (diversidad de frases y complejidad)
+    original_score = len(set([sent for sent in text.split('.')])) / structure_score
     
-    # Evaluación de Impacto (intensidad del sentimiento)
-    # Usamos un enfoque simple: si hay más adjetivos o adverbios, el impacto es mayor
-    sentiment_score = len(re.findall(r'\b(quick|slow|good|bad|interesting|important)\b', text, re.IGNORECASE))  # Palabras clave
-    impact_score = sentiment_score * 2  # Escalar el impacto
+    # Evaluación de Impacto (intensidad del sentimiento, que es la polaridad del texto)
+    impact_score = len(re.findall(r'\b(?:impact|important|crucial|critical)\b', text, re.IGNORECASE))  # Recuento de palabras de impacto
     
     return content_score, structure_score, style_score, original_score, impact_score
 
 # Interfaz de Streamlit
 st.title("Evaluación Automática de Ensayos: Selección de Candidatos para Ocupación de Vacantes Según la Nueva Reforma del Poder Judicial")
+
+# Sección de Ayuda en el sidebar
+with st.sidebar:
+    st.header("Ayuda")
+    st.write("""
+    ### ¿Cómo funciona esta aplicación?
+    Esta aplicación permite la evaluación automatizada de ensayos, útil para agilizar el proceso de selección de candidatos para ocupar vacantes en el Poder Judicial de la Federación.
+    
+    ### Criterios de Evaluación:
+    1. **Contenido**: Se evalúa la cantidad de palabras en el texto.
+    2. **Estructura**: Se mide el número de oraciones en el ensayo.
+    3. **Estilo**: Se calcula la diversidad léxica, es decir, cuántas palabras diferentes se utilizan.
+    4. **Originalidad**: Se evalúa la complejidad del texto y la diversidad de las frases.
+    5. **Impacto**: Se analizan las palabras clave que denotan importancia y relevancia del ensayo.
+
+    ### ¿Por qué es importante?
+    Este sistema ayuda a reducir el tiempo necesario para evaluar los ensayos, permitiendo al comite evaluador puedan centrarse en aspectos más cualitativos y estratégicos de la selección de los candidatos.
+    """)
 
 # Cargar archivos PDF
 uploaded_files = st.file_uploader("Sube tus archivos PDF", type="pdf", accept_multiple_files=True)
