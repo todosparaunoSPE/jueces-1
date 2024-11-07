@@ -1,6 +1,9 @@
 PyPDF2==3.0.1
 pandas==2.2.3
 spacy==3.4.0 
+pip
+cython
+tokenizers
 https://github.com/explosion/spacy-models/releases/download/de_core_news_md-3.4.0/de_core_news_md-3.4.0.tar.gz 
 https://github.com/explosion/spacy-models/releases/download/de_core_news_lg-3.4.0/de_core_news_lg-3.4.0.tar.gz 
 https://github.com/explosion/spacy-models/releases/download/de_dep_news_trf-3.4.0/de_dep_news_trf-3.4.0.tar.gz 
